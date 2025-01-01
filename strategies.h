@@ -1,6 +1,5 @@
 #pragma once
 #include "DataModule.h"
-#include "strategyEngine.h"
 #include "portfolio.h"
 #include <deque>
 #include <numeric>

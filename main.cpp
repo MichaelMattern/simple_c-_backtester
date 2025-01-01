@@ -1,5 +1,5 @@
 #include "DataModule.h"
-#include "strategyEngine.h"
+#include "BacktestingEngine.h"
 #include "Portfolio.h"
 #include "Metrics.h"
 #include "Strategies.h"
@@ -19,14 +19,27 @@ void displayPerformanceMetrics(const Portfolio& portfolio, const std::vector<dou
         double maxDrawdown = Metrics::calculateMaxDrawdown(equityCurve);
         double totalReturn = Metrics::calculateTotalReturn(equityCurve);
         double annualizedReturn = Metrics::calculateAnnualizedReturn(equityCurve, 252); // 252 trading days in a year
+		double winRate = Metrics::calculateWinRate(portfolio.getReturns());
+		double profitFactor = Metrics::calculateProfitFactor(portfolio.getReturns());
+		double averageTradeReturn = Metrics::calculateAverageTradeReturn(portfolio.getReturns());
+		double sortinoRatio = Metrics::calculateSortinoRatio(portfolio.getReturns());
+		double calmarRatio = Metrics::calculateCalmarRatio(equityCurve, 252);
+		double expectancy = Metrics::calculateExpectancy(portfolio.getReturns());
 
         // Display metrics
+        std::cout << "\n";
         std::cout << "\nPerformance Metrics:" << std::endl;
         std::cout << "---------------------" << std::endl;
-        std::cout << "Sharpe Ratio: " << sharpeRatio << std::endl;
-        std::cout << "Maximum Drawdown: " << maxDrawdown * 100 << "%" << std::endl;
         std::cout << "Total Return: " << totalReturn * 100 << "%" << std::endl;
+        std::cout << "Win Rate: " << winRate * 100 << "%" << std::endl;
+        std::cout << "Average Trade Return: " << averageTradeReturn << std::endl;
         std::cout << "Annualized Return: " << annualizedReturn * 100 << "%" << std::endl;
+		std::cout << "Profit Factor: " << profitFactor << std::endl;
+        std::cout << "Maximum Drawdown: " << maxDrawdown * 100 << "%" << std::endl;
+        std::cout << "Sharpe Ratio: " << sharpeRatio << std::endl;
+		std::cout << "Sortino Ratio: " << sortinoRatio << std::endl;
+		std::cout << "Calmar Ratio: " << calmarRatio << std::endl;
+		std::cout << "Expectancy: " << expectancy << std::endl;
     }
     catch (const std::exception& e) {
         std::cerr << "Error calculating metrics: " << e.what() << std::endl;
